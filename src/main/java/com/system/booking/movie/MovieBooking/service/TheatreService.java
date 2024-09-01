@@ -27,7 +27,6 @@ public class TheatreService {
             theatreInDb.setTheatre_address(theatre.getTheatre_address() != null ? theatre.getTheatre_address() : theatreInDb.getTheatre_address());
             theatreInDb.setTheatre_city(theatre.getTheatre_city() != null ? theatre.getTheatre_city() : theatreInDb.getTheatre_city());
             theatreInDb.setTheatre_state(theatre.getTheatre_state() != null ? theatre.getTheatre_state() : theatreInDb.getTheatre_state());
-            theatreInDb.setScreens(theatre.getScreens() != null ? theatre.getScreens() : theatreInDb.getScreens());
             theatreRepository.save(theatreInDb);
         }
     }

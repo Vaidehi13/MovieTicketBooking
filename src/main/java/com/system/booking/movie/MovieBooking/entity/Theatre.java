@@ -15,10 +15,4 @@ public class Theatre {
     private String theatre_address;
     private String theatre_city;
     private String theatre_state;
-
-    @ManyToMany(mappedBy = "theatres")
-    private Set<Movie> movies;
-
-    @OneToMany(mappedBy = "theatre", cascade = CascadeType.ALL)
-    private Set<Screen> screens;
 }
