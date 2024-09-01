@@ -22,4 +22,9 @@ public class TheatreController {
         theatreService.updateTheatre(theatre);
         return ResponseEntity.ok("Theatre updated successfully");
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteTheatre(@PathVariable int id){
+        theatreService.deleteTheatre(id);
+        return ResponseEntity.ok("Theatre deleted successfully");
+    }
 }

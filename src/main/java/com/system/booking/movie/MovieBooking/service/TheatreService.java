@@ -31,4 +31,8 @@ public class TheatreService {
             theatreRepository.save(theatreInDb);
         }
     }
+
+    public void deleteTheatre(int id) {
+        theatreRepository.deleteById(id);
+    }
 }
