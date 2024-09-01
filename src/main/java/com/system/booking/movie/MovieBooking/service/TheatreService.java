@@ -14,4 +14,8 @@ public class TheatreService {
     public List<Theatre> getAllTheatres() {
         return theatreRepository.findAll();
     }
+
+    public void addNewTheatre(Theatre theatre) {
+        theatreRepository.save(theatre);
+    }
 }
