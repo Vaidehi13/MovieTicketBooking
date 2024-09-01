@@ -18,4 +18,17 @@ public class TheatreService {
     public void addNewTheatre(Theatre theatre) {
         theatreRepository.save(theatre);
     }
+
+    public void updateTheatre(Theatre theatre) {
+        Theatre theatreInDb = theatreRepository.findById(theatre.getTheatre_id())
+                .orElseThrow(() -> new RuntimeException("There is no such theatre"));
+        if(theatreInDb != null) {
+            theatreInDb.setTheatre_name(theatre.getTheatre_name() != null ? theatre.getTheatre_name() : theatreInDb.getTheatre_name());
+            theatreInDb.setTheatre_address(theatre.getTheatre_address() != null ? theatre.getTheatre_address() : theatreInDb.getTheatre_address());
+            theatreInDb.setTheatre_city(theatre.getTheatre_city() != null ? theatre.getTheatre_city() : theatreInDb.getTheatre_city());
+            theatreInDb.setTheatre_state(theatre.getTheatre_state() != null ? theatre.getTheatre_state() : theatreInDb.getTheatre_state());
+            theatreInDb.setScreens(theatre.getScreens() != null ? theatre.getScreens() : theatreInDb.getScreens());
+            theatreRepository.save(theatreInDb);
+        }
+    }
 }
