@@ -3,8 +3,6 @@ package com.system.booking.movie.MovieBooking.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Set;
-
 @Entity
 @Data
 public class Theatre {

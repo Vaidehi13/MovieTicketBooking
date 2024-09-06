@@ -1,7 +1,6 @@
 package com.system.booking.movie.MovieBooking.controller;
 
 import com.system.booking.movie.MovieBooking.entity.Screen;
-import com.system.booking.movie.MovieBooking.entity.Theatre;
 import com.system.booking.movie.MovieBooking.service.ScreenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

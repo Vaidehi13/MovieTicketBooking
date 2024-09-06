@@ -1,13 +1,7 @@
 package com.system.booking.movie.MovieBooking.controller;
 
-import com.system.booking.movie.MovieBooking.entity.Movie;
-import com.system.booking.movie.MovieBooking.entity.Screen;
-import com.system.booking.movie.MovieBooking.entity.Theatre;
-import com.system.booking.movie.MovieBooking.entity.User;
-import com.system.booking.movie.MovieBooking.service.MovieService;
-import com.system.booking.movie.MovieBooking.service.ScreenService;
-import com.system.booking.movie.MovieBooking.service.TheatreService;
-import com.system.booking.movie.MovieBooking.service.UserService;
+import com.system.booking.movie.MovieBooking.entity.*;
+import com.system.booking.movie.MovieBooking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +20,8 @@ public class PublicController {
     MovieService movieService;
     @Autowired
     ScreenService screenService;
+    @Autowired
+    private SeatService seatService;
 
     // Register New User
     @PostMapping("/register")
