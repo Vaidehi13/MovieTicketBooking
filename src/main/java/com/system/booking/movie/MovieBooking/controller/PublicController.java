@@ -53,4 +53,10 @@ public class PublicController {
         List<Screen> screenList = screenService.getAllScreens();
         return new ResponseEntity<>(screenList,HttpStatus.OK);
     }
+    //Fetch all screens by screen id
+    @GetMapping("/allSeats/{screen_id}")
+    public ResponseEntity<?> fetchAllSeatsofScreen(@PathVariable int screen_id){
+        List<Seat> seatList = seatService.fetchAllSeatsOfScreen(screen_id);
+        return new ResponseEntity<>(seatList,HttpStatus.OK);
+    }
 }
