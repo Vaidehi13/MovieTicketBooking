@@ -15,6 +15,9 @@ public class Seat {
     @ManyToOne
     @JoinColumn(name = "screen_id")
     private Screen screen;
+    @ManyToOne
+    @JoinColumn(name = "booking_id")
+    private BookTicket bookTicket;
 
     public Seat(String available, Screen screen) {
         this.status = available;
