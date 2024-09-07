@@ -20,4 +20,5 @@ public class BookTicket {
     @JoinColumn(name = "movie_id")
     private Movie movie;
     private float amount;
+    private String status;
 }

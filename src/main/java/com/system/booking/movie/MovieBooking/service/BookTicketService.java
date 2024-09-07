@@ -10,8 +10,10 @@ import com.system.booking.movie.MovieBooking.repository.ScreenRepository;
 import com.system.booking.movie.MovieBooking.repository.SeatRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +50,18 @@ public class BookTicketService {
         bookTicket.setSeats(seatList);
         bookTicket.setScreen(screen);
         bookTicket.setMovie(movie);
+        bookTicket.setStatus("Active");
         bookTicketRepository.save(bookTicket);
+    }
+    @Scheduled(fixedRate = 3600000)
+    public void updateExpiredTickets(){
+        List<BookTicket> bookTickets = bookTicketRepository.findByStatus("active");
+        LocalDateTime now = LocalDateTime.now();
+        for(BookTicket bookTicket : bookTickets) {
+            if(bookTicket.getMovie().getStart_time().isBefore(now)){
+                bookTicket.setStatus("Expired");
+                bookTicketRepository.save(bookTicket);
+            }
+        }
     }
 }

@@ -12,7 +12,7 @@ public class BookTicketController {
     @Autowired
     BookTicketService bookTicketService;
     @PostMapping("/ticket")
-    public ResponseEntity bookTicket(@RequestBody BookTicket bookTicket) {
+    public ResponseEntity<?> bookTicket(@RequestBody BookTicket bookTicket) {
         bookTicketService.bookTicket(bookTicket);
         return ResponseEntity.ok("Ticket booked successfully");
     }
