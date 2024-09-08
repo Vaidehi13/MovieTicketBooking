@@ -16,4 +16,9 @@ public class BookTicketController {
         bookTicketService.bookTicket(bookTicket);
         return ResponseEntity.ok("Ticket booked successfully");
     }
+    @PatchMapping("/cancel")
+    public ResponseEntity<?> cancelTicket(@RequestBody BookTicket bookTicket ) {
+        bookTicketService.cancelTicket(bookTicket);
+        return ResponseEntity.ok("Ticket cancelled successfully");
+    }
 }

@@ -64,4 +64,23 @@ public class BookTicketService {
             }
         }
     }
+
+    @Transactional
+    public void cancelTicket(BookTicket bookTicket) {
+        BookTicket bookTicketInDb = bookTicketRepository.findById(bookTicket.getBooking_id())
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+        List<Seat> seatList = seatRepository.findByBookingId(bookTicket.getBooking_id());
+        if(bookTicketInDb.getStatus().equals("Active")) {
+            bookTicketInDb.setStatus("Cancelled");
+            bookTicketRepository.save(bookTicketInDb);
+            for(Seat seat : seatList) {
+                if(seat.getStatus().equals("booked")) {
+                    seat.setStatus("Cancelled");
+                    seatRepository.save(seat);
+                }else throw new RuntimeException("Seat with ID " + seat.getSeat_id() + " is invalid.");
+            }
+        }else{
+            throw new RuntimeException("Booking already expired.");
+        }
+    }
 }
