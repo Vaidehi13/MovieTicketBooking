@@ -1,6 +1,7 @@
 package com.system.booking.movie.MovieBooking.controller;
 
 import com.system.booking.movie.MovieBooking.entity.*;
+import com.system.booking.movie.MovieBooking.exception.ResourceNotFoundException;
 import com.system.booking.movie.MovieBooking.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class PublicController {
         if(theatreList != null && !theatreList.isEmpty()){
             return new ResponseEntity<>(theatreList, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        throw new ResourceNotFoundException("No theatres found");
     }
     //Fetch all movies
     @GetMapping("/allMovies")
@@ -48,7 +49,7 @@ public class PublicController {
         if(movieList != null && !movieList.isEmpty()){
             return new ResponseEntity<>(movieList, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        throw new ResourceNotFoundException("No movies found");
     }
     //Fetch all available screens
     @GetMapping("/allScreens")
@@ -60,6 +61,9 @@ public class PublicController {
     @GetMapping("/allSeats/{screen_id}")
     public ResponseEntity<?> fetchAllSeatsofScreen(@PathVariable int screen_id){
         List<Seat> seatList = seatService.fetchAllSeatsOfScreen(screen_id);
-        return new ResponseEntity<>(seatList,HttpStatus.OK);
+        if(seatList != null && !seatList.isEmpty()) {
+            return new ResponseEntity<>(seatList, HttpStatus.OK);
+        }
+        throw new ResourceNotFoundException("No seats found for screen id "+screen_id);
     }
 }

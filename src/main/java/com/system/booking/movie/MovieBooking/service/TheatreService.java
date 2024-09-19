@@ -1,6 +1,7 @@
 package com.system.booking.movie.MovieBooking.service;
 
 import com.system.booking.movie.MovieBooking.entity.Theatre;
+import com.system.booking.movie.MovieBooking.exception.ResourceNotFoundException;
 import com.system.booking.movie.MovieBooking.repository.TheatreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class TheatreService {
 
     public void updateTheatre(Theatre theatre) {
         Theatre theatreInDb = theatreRepository.findById(theatre.getTheatre_id())
-                .orElseThrow(() -> new RuntimeException("There is no such theatre"));
+                .orElseThrow(() -> new ResourceNotFoundException("There is no such theatre"));
         if(theatreInDb != null) {
             theatreInDb.setTheatre_name(theatre.getTheatre_name() != null ? theatre.getTheatre_name() : theatreInDb.getTheatre_name());
             theatreInDb.setTheatre_address(theatre.getTheatre_address() != null ? theatre.getTheatre_address() : theatreInDb.getTheatre_address());

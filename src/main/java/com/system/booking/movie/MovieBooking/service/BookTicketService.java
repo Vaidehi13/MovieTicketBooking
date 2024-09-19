@@ -4,6 +4,8 @@ import com.system.booking.movie.MovieBooking.entity.BookTicket;
 import com.system.booking.movie.MovieBooking.entity.Movie;
 import com.system.booking.movie.MovieBooking.entity.Screen;
 import com.system.booking.movie.MovieBooking.entity.Seat;
+import com.system.booking.movie.MovieBooking.exception.InvalidResource;
+import com.system.booking.movie.MovieBooking.exception.ResourceNotFoundException;
 import com.system.booking.movie.MovieBooking.repository.BookTicketRepository;
 import com.system.booking.movie.MovieBooking.repository.MovieRepository;
 import com.system.booking.movie.MovieBooking.repository.ScreenRepository;
@@ -31,16 +33,16 @@ public class BookTicketService {
     @Transactional
     public void bookTicket(BookTicket bookTicket) {
         Screen screen = screenRepository.findById(bookTicket.getScreen().getScreen_id())
-                .orElseThrow(() -> new RuntimeException("Screen not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Screen not found"));
         Movie movie = movieRepository.findById(bookTicket.getMovie().getMovie_id())
-                .orElseThrow(() -> new RuntimeException("Movie not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
         List<Seat> seatList = new ArrayList<>();
         for(Seat seat : bookTicket.getSeats()) {
             Seat seatInDb = seatRepository.findById(seat.getSeat_id())
-                    .orElseThrow(() -> new RuntimeException("Seat not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Seat not found"));
             // Check if the seat is already booked
             if ("booked".equals(seatInDb.getStatus())) {
-                throw new RuntimeException("Seat with ID " + seat.getSeat_id() + " is already booked.");
+                throw new InvalidResource("Seat with ID " + seat.getSeat_id() + " is already booked.");
             }
             seatInDb.setStatus("booked");
             seatInDb.setBookTicket(bookTicket);
@@ -68,7 +70,7 @@ public class BookTicketService {
     @Transactional
     public void cancelTicket(BookTicket bookTicket) {
         BookTicket bookTicketInDb = bookTicketRepository.findById(bookTicket.getBooking_id())
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
         List<Seat> seatList = seatRepository.findByBookingId(bookTicket.getBooking_id());
         if(bookTicketInDb.getStatus().equals("Active")) {
             bookTicketInDb.setStatus("Cancelled");
@@ -77,7 +79,7 @@ public class BookTicketService {
                 if(seat.getStatus().equals("booked")) {
                     seat.setStatus("Cancelled");
                     seatRepository.save(seat);
-                }else throw new RuntimeException("Seat with ID " + seat.getSeat_id() + " is invalid.");
+                }else throw new InvalidResource("Seat with ID " + seat.getSeat_id() + " is invalid.");
             }
         }else{
             throw new RuntimeException("Booking already expired.");

@@ -3,6 +3,7 @@ package com.system.booking.movie.MovieBooking.service;
 import com.system.booking.movie.MovieBooking.entity.Screen;
 import com.system.booking.movie.MovieBooking.entity.Seat;
 import com.system.booking.movie.MovieBooking.entity.Theatre;
+import com.system.booking.movie.MovieBooking.exception.ResourceNotFoundException;
 import com.system.booking.movie.MovieBooking.repository.ScreenRepository;
 import com.system.booking.movie.MovieBooking.repository.SeatRepository;
 import com.system.booking.movie.MovieBooking.repository.TheatreRepository;
@@ -28,7 +29,7 @@ public class ScreenService {
     @Transactional
     public void addNewScreen(Screen screen) {
         Theatre theatre = theatreRepository.findById(screen.getTheatre().getTheatre_id())
-                .orElseThrow(() -> new RuntimeException("Theatre not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Theatre not found"));
         screen.setTheatre(theatre);
         screenRepository.save(screen);
         for(int i = 0; i < screen.getTotal_seats();i++)
