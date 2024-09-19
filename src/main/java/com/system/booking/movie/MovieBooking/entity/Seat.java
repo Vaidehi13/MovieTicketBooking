@@ -1,6 +1,7 @@
 package com.system.booking.movie.MovieBooking.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int seat_id;
+    @NotBlank(message = "Seat status cannot be blank")
     private String status;
     @ManyToOne
     @JoinColumn(name = "screen_id")

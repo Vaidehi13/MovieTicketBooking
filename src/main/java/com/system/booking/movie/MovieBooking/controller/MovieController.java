@@ -3,6 +3,7 @@ package com.system.booking.movie.MovieBooking.controller;
 
 import com.system.booking.movie.MovieBooking.entity.Movie;
 import com.system.booking.movie.MovieBooking.service.MovieService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class MovieController {
     MovieService movieService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addNewMovie(@RequestBody Movie movie){
+    public ResponseEntity<String> addNewMovie(@Valid @RequestBody Movie movie){
         movieService.addNewMovie(movie);
         return ResponseEntity.ok("Movie added successfully");
     }

@@ -2,6 +2,7 @@ package com.system.booking.movie.MovieBooking.controller;
 
 import com.system.booking.movie.MovieBooking.entity.Screen;
 import com.system.booking.movie.MovieBooking.service.ScreenService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ public class ScreenController {
     @Autowired
     ScreenService screenService;
     @PostMapping("/add")
-    public ResponseEntity<String> addNewScreen(@RequestBody Screen screen) {
+    public ResponseEntity<String> addNewScreen(@Valid @RequestBody Screen screen) {
         screenService.addNewScreen(screen);
         return ResponseEntity.ok("Screen added successfully");
     }
