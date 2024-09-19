@@ -1,11 +1,23 @@
 # MovieTicketBooking
-Movie Ticket Booking backend using Java, Spring boot, MySQL, Spring Data JPA
+## Overview
+This application is a comprehensive platform designed for booking movie tickets online.
+It provides users with an intuitive interface to browse movies, select showtimes, and purchase tickets. 
+The application aims to streamline the movie-going experience by offering a seamless and user-friendly booking process.
 
-# User Authentication
-User authentication is achieved using Spring Security using BCrypt Password Encoder
+# Key Features
 
-# Scheduler
-For updating the expired ticket booking hourly updating Scheduler is used.
+## User Authentication
+User authentication is implemented using Spring Security with BCrypt for password encoding
 
-# Transaction
-Transactions are handled while ticket bookings
+## Booked ticket expiry
+An hourly updating scheduler is used to manage and update expired ticket bookings.
+
+## Application monitoring
+The application health metrics are monitored with the help of actuator
+
+# Technologies Used
++  Spring Boot
++ Spring Data JPA
++ MySQL
++ Spring boot Security
+
