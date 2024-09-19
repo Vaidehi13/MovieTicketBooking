@@ -2,15 +2,18 @@ package com.system.booking.movie.MovieBooking.controller;
 
 import com.system.booking.movie.MovieBooking.entity.*;
 import com.system.booking.movie.MovieBooking.service.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/public")
+@Validated
 public class PublicController {
     @Autowired
     UserService userService;
@@ -25,7 +28,7 @@ public class PublicController {
 
     // Register New User
     @PostMapping("/register")
-    public ResponseEntity<String> addUser(@RequestBody User user) {
+    public ResponseEntity<String> addUser(@Valid @RequestBody User user) {
         userService.addUser(user);
         return ResponseEntity.ok("User registered successfully");
     }
