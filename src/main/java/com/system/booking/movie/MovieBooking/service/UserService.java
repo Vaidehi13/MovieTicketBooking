@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -20,12 +19,13 @@ public class UserService {
     @Autowired
     private CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
 
-    public void addUser(User user) {
+    public boolean addUser(User user) {
         if(user.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword())); // Encode password
 //            user.setRoles(Arrays.asList("USER"));
             userRepository.save(user);
         }
+        return false;
     }
     public void updateUser(String username,User user) {
         User userInDb = userRepository.findByUsername(username);
