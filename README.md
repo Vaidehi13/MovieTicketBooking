@@ -9,6 +9,9 @@ The application aims to streamline the movie-going experience by offering a seam
 ## User Authentication
 User authentication is implemented using Spring Security with BCrypt for password encoding
 
+## User Authorization
+User authorization is implemented using Role Based Access
+
 ## Booked ticket expiry
 An hourly updating scheduler is used to manage and update expired ticket bookings.
 
@@ -18,6 +21,8 @@ The application health metrics are monitored with the help of actuator
 # Technologies Used
 +  Spring Boot
 + Spring Data JPA
-+ MySQL
 + Spring boot Security
++ MySQL
++ JUnit 5
++ Mockito
 
