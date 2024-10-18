@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -22,7 +23,7 @@ public class UserService {
     public void addUser(User user) {
         if(user.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(user.getPassword())); // Encode password
-            user.setRoles("USER");
+//            user.setRoles(Arrays.asList("USER"));
             userRepository.save(user);
         }
     }
@@ -35,5 +36,8 @@ public class UserService {
             userInDb.setAge(user.getAge() != 0? user.getAge() : userInDb.getAge());
             userRepository.save(userInDb);
         }
+    }
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
     }
 }
