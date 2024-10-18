@@ -3,9 +3,11 @@ package com.system.booking.movie.MovieBooking.service;
 import com.system.booking.movie.MovieBooking.entity.User;
 import com.system.booking.movie.MovieBooking.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +26,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
+                .roles(user.getRoles())
                 .build();
     }
 }

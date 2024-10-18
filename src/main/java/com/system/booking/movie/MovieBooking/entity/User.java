@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.*;
 import jakarta.validation.constraints.*;
 
+import java.util.List;
+
 @Data
 @Getter
 @Setter
@@ -24,13 +26,15 @@ public class User {
     @Email
     private String email;
     @NotBlank(message = "Password cannot be blank")
-    @Size(min = 8, max = 15, message = "Password must be at least 8 characters long")
+//    @Size(min = 8, max = 15, message = "Password must be at least 8 characters long")
     private String password;
     @NotBlank(message = "Mobile number cannot be blank")
     @Pattern(regexp = "^\\d{10}$", message = "Mobile number must be exactly 10 digits")
     private String mobile_no;
-    @NotBlank(message = "Age cannot be blank")
+
+    @NotNull(message = "Age cannot be blank")
     @Min(value = 18, message = "Age must be at least 18")
     @Max(value = 100, message = "Age must not exceed 100")
     private int age;
+    private String roles;
 }
