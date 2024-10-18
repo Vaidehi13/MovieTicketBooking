@@ -21,7 +21,6 @@ public class Screen {
     @JoinColumn(name = "theatre_id")
     private Theatre theatre;
     @NotNull(message = "Seats cannot be null")
-    @NotNull(message = "Seats cannot be blank")
     @Min(value = 1,message = "Minimum seats should be one")
     private int total_seats;
 }

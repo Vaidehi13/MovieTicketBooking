@@ -1,9 +1,6 @@
 package com.system.booking.movie.MovieBooking.service;
 
-import com.system.booking.movie.MovieBooking.entity.BookTicket;
-import com.system.booking.movie.MovieBooking.entity.Movie;
-import com.system.booking.movie.MovieBooking.entity.Screen;
-import com.system.booking.movie.MovieBooking.entity.Seat;
+import com.system.booking.movie.MovieBooking.entity.*;
 import com.system.booking.movie.MovieBooking.exception.InvalidResource;
 import com.system.booking.movie.MovieBooking.exception.ResourceNotFoundException;
 import com.system.booking.movie.MovieBooking.repository.BookTicketRepository;
@@ -32,8 +29,8 @@ public class BookTicketService {
 
     @Transactional
     public void bookTicket(BookTicket bookTicket) {
-        Screen screen = screenRepository.findById(bookTicket.getScreen().getScreen_id())
-                .orElseThrow(() -> new ResourceNotFoundException("Screen not found"));
+//        Screen screen = screenRepository.findById(bookTicket.getScreen().getScreen_id())
+//                .orElseThrow(() -> new ResourceNotFoundException("Screen not found"));
         Movie movie = movieRepository.findById(bookTicket.getMovie().getMovie_id())
                 .orElseThrow(() -> new ResourceNotFoundException("Movie not found"));
         List<Seat> seatList = new ArrayList<>();
@@ -50,18 +47,18 @@ public class BookTicketService {
             seatList.add(seatInDb);
         }
         bookTicket.setSeats(seatList);
-        bookTicket.setScreen(screen);
+//        bookTicket.setScreen(screen);
         bookTicket.setMovie(movie);
-        bookTicket.setStatus("Active");
+        bookTicket.setStatus(TicketStatus.ACTIVE);
         bookTicketRepository.save(bookTicket);
     }
     @Scheduled(fixedRate = 3600000)
     public void updateExpiredTickets(){
-        List<BookTicket> bookTickets = bookTicketRepository.findByStatus("active");
+        List<BookTicket> bookTickets = bookTicketRepository.findByStatus(TicketStatus.ACTIVE);
         LocalDateTime now = LocalDateTime.now();
         for(BookTicket bookTicket : bookTickets) {
             if(bookTicket.getMovie().getStart_time().isBefore(now)){
-                bookTicket.setStatus("Expired");
+                bookTicket.setStatus(TicketStatus.EXPIRED);
                 bookTicketRepository.save(bookTicket);
             }
         }
@@ -72,12 +69,12 @@ public class BookTicketService {
         BookTicket bookTicketInDb = bookTicketRepository.findById(bookTicket.getBooking_id())
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
         List<Seat> seatList = seatRepository.findByBookingId(bookTicket.getBooking_id());
-        if(bookTicketInDb.getStatus().equals("Active")) {
-            bookTicketInDb.setStatus("Cancelled");
+        if(bookTicketInDb.getStatus().equals(TicketStatus.ACTIVE)) {
+            bookTicketInDb.setStatus(TicketStatus.CANCELED);
             bookTicketRepository.save(bookTicketInDb);
             for(Seat seat : seatList) {
-                if(seat.getStatus().equals("booked")) {
-                    seat.setStatus("Cancelled");
+                if(seat.getStatus().equals(String.valueOf(TicketStatus.BOOKED))) {
+                    seat.setStatus(String.valueOf(TicketStatus.CANCELED));
                     seatRepository.save(seat);
                 }else throw new InvalidResource("Seat with ID " + seat.getSeat_id() + " is invalid.");
             }
