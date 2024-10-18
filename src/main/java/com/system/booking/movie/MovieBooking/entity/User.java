@@ -18,7 +18,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int user_id;
+    private int id;
     @NotBlank(message = "Username cannot be blank")
     @Size(min = 3, max = 50, message = "Username should be between 3 to 50 characters")
     private String username;

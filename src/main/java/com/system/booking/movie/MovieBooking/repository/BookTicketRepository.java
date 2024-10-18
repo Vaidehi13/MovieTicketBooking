@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface BookTicketRepository extends JpaRepository<BookTicket, Integer> {
     List<BookTicket> findByStatus(String status);
+    List<BookTicket> findByUser_Id(int userId);
 }

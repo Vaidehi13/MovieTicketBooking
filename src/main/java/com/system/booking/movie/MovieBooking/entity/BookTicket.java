@@ -11,6 +11,9 @@ public class BookTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int booking_id;
+    @ManyToOne // Assuming each ticket is associated with one user
+    @JoinColumn(name = "user_id")
+    private User user;
     @ManyToOne
     @JoinColumn(name = "screen_id")
     private Screen screen;
