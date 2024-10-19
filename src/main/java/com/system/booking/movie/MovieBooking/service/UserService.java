@@ -2,6 +2,8 @@ package com.system.booking.movie.MovieBooking.service;
 
 import com.system.booking.movie.MovieBooking.entity.User;
 import com.system.booking.movie.MovieBooking.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     public boolean addUser(User user) {
         if(user.getPassword() != null) {
