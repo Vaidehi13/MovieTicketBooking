@@ -2,6 +2,7 @@ package com.system.booking.movie.MovieBooking.service;
 
 import com.system.booking.movie.MovieBooking.response.MovieAPIResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -15,8 +16,10 @@ import java.util.List;
 public class MovieAPIService {
 
     // Replace this with your actual API key
-    private static final String apiKey = "";
-    private static final String apiHost = "";
+    @Value("${movie.api.key}")
+    private String apiKey;
+    @Value("${movie.api.host}")
+    private String apiHost;
     private final String url = "https://imdb-top-100-movies.p.rapidapi.com/series/";
 
     @Autowired
