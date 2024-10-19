@@ -27,6 +27,9 @@ public class PublicController {
     @Autowired
     private SeatService seatService;
 
+    @Autowired
+    private MovieAPIService movieAPIService;
+
     // Register New User
     @PostMapping("/register")
     public ResponseEntity<String> addUser(@Valid @RequestBody User user) {
@@ -65,5 +68,9 @@ public class PublicController {
             return new ResponseEntity<>(seatList, HttpStatus.OK);
         }
         throw new ResourceNotFoundException("No seats found for screen id "+screen_id);
+    }
+    @GetMapping("/api/movie")
+    public ResponseEntity<?> getMovies(){
+        return new ResponseEntity<>(movieAPIService.callMovieAPI(),HttpStatus.OK);
     }
 }
