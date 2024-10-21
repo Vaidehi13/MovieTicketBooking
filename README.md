@@ -15,6 +15,9 @@ User authorization is implemented using Role Based Access
 ## Booked ticket expiry
 An hourly updating scheduler is used to manage and update expired ticket bookings.
 
+## Fetch top 100 famous movies
+Integrated IMDB API to fetch top 100 famous movies with application using RESTTemplate
+
 ## Application monitoring
 The application health metrics are monitored with the help of actuator
 
@@ -22,6 +25,7 @@ The application health metrics are monitored with the help of actuator
 +  Spring Boot
 + Spring Data JPA
 + Spring boot Security
++ RestTemplate
 + MySQL
 + JUnit 5
 + Mockito

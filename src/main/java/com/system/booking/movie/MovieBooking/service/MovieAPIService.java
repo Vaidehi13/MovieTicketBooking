@@ -20,24 +20,35 @@ public class MovieAPIService {
     private String apiKey;
     @Value("${movie.api.host}")
     private String apiHost;
-    private final String url = "https://imdb-top-100-movies.p.rapidapi.com/series/";
+    @Value("${movie.api.url}")
+    private String url;
 
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    RedisService redisService;
+
     public List<MovieAPIResponse> callMovieAPI() {
-        // Setup the headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("x-rapidapi-key", apiKey); // Use the actual API key
-        headers.set("x-rapidapi-host", apiHost); // Correct API host
+        // Fetch data from Redis
+        MovieAPIResponse movieAPIResponse = redisService.get("top_100_movies", MovieAPIResponse.class);
+        if(movieAPIResponse != null){
+            return List.of(movieAPIResponse);
+        }else {
+            // Setup the headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("x-rapidapi-key", apiKey); // Use the actual API key
+            headers.set("x-rapidapi-host", apiHost); // Correct API host
 
-        // Create an HttpEntity with the headers
-        HttpEntity<String> entity = new HttpEntity<>(headers);
+            // Create an HttpEntity with the headers
+            HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        // Make the API call
-        ResponseEntity<MovieAPIResponse[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, MovieAPIResponse[].class);
+            // Make the API call
+            ResponseEntity<MovieAPIResponse[]> response = restTemplate.exchange(url, HttpMethod.GET, entity, MovieAPIResponse[].class);
+            redisService.set("top_100_movies",response.getBody(),3000l);
 
-        // Convert the array to a List and return
-        return List.of(response.getBody());
+            // Convert the array to a List and return
+            return List.of(response.getBody());
+        }
     }
 }
