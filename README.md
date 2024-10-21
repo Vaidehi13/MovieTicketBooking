@@ -18,6 +18,9 @@ An hourly updating scheduler is used to manage and update expired ticket booking
 ## Fetch top 100 famous movies
 Integrated IMDB API to fetch top 100 famous movies with application using RESTTemplate
 
+## Caching
+Caching is implemented using Redis Cloud
+
 ## Application monitoring
 The application health metrics are monitored with the help of actuator
 
@@ -26,6 +29,7 @@ The application health metrics are monitored with the help of actuator
 + Spring Data JPA
 + Spring boot Security
 + RestTemplate
++ Redis
 + MySQL
 + JUnit 5
 + Mockito
