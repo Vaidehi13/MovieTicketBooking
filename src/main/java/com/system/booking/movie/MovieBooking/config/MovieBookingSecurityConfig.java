@@ -30,9 +30,7 @@ public class MovieBookingSecurityConfig {
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults())
-                .userDetailsService(userDetailsService)
-                .csrf(AbstractHttpConfigurer::disable)
+                .oauth2Login(Customizer.withDefaults())
                 .build();
     }
 
