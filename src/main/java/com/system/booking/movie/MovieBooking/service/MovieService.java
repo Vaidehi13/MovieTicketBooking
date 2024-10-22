@@ -1,5 +1,6 @@
 package com.system.booking.movie.MovieBooking.service;
 
+import com.system.booking.movie.MovieBooking.dto.MovieDto;
 import com.system.booking.movie.MovieBooking.entity.Movie;
 import com.system.booking.movie.MovieBooking.entity.Screen;
 import com.system.booking.movie.MovieBooking.entity.Theatre;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -22,8 +24,19 @@ public class MovieService {
     TheatreRepository theatreRepository;
     @Autowired
     ScreenRepository screenRepository;
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+    public Set<Integer> getScreenIds(Movie movie){
+        return movie.getScreens().stream().map(Screen::getScreen_id).collect(Collectors.toUnmodifiableSet());
+    }
+    public List<MovieDto> getAllMovies() {
+        List<Movie> movies =  movieRepository.findAll();
+        return movies.stream().map(
+                movie -> MovieDto.builder()
+                        .movie_id(movie.getMovie_id())
+                        .movie_name(movie.getMovie_name())
+                        .start_time(movie.getStart_time())
+                        .screen_id(getScreenIds(movie))
+                        .build()
+        ).collect(Collectors.toUnmodifiableList());
     }
 
     public void addNewMovie(Movie movie) {

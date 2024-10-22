@@ -1,5 +1,9 @@
 package com.system.booking.movie.MovieBooking.controller;
 
+import com.system.booking.movie.MovieBooking.dto.MovieDto;
+import com.system.booking.movie.MovieBooking.dto.ScreenDto;
+import com.system.booking.movie.MovieBooking.dto.SeatDto;
+import com.system.booking.movie.MovieBooking.dto.TheatreDto;
 import com.system.booking.movie.MovieBooking.entity.*;
 import com.system.booking.movie.MovieBooking.exception.ResourceNotFoundException;
 import com.system.booking.movie.MovieBooking.service.*;
@@ -39,7 +43,7 @@ public class PublicController {
     // Fetch all theatres
     @GetMapping("/allTheatres")
     public ResponseEntity<?> getAllTheatres(){
-        List<Theatre> theatreList = theatreService.getAllTheatres();
+        List<TheatreDto> theatreList = theatreService.getAllTheatres();
         if(theatreList != null && !theatreList.isEmpty()){
             return new ResponseEntity<>(theatreList, HttpStatus.OK);
         }
@@ -48,7 +52,7 @@ public class PublicController {
     //Fetch all movies
     @GetMapping("/allMovies")
     public ResponseEntity<?> getAllMovies(){
-        List<Movie> movieList = movieService.getAllMovies();
+        List<MovieDto> movieList = movieService.getAllMovies();
         if(movieList != null && !movieList.isEmpty()){
             return new ResponseEntity<>(movieList, HttpStatus.OK);
         }
@@ -57,13 +61,13 @@ public class PublicController {
     //Fetch all available screens
     @GetMapping("/allScreens")
     public ResponseEntity<?> getAllScreens(){
-        List<Screen> screenList = screenService.getAllScreens();
+        List<ScreenDto> screenList = screenService.getAllScreens();
         return new ResponseEntity<>(screenList,HttpStatus.OK);
     }
     //Fetch all screens by screen id
     @GetMapping("/allSeats/{screen_id}")
     public ResponseEntity<?> fetchAllSeatsofScreen(@PathVariable int screen_id){
-        List<Seat> seatList = seatService.fetchAllSeatsOfScreen(screen_id);
+        List<SeatDto> seatList = seatService.fetchAllSeatsOfScreen(screen_id);
         if(seatList != null && !seatList.isEmpty()) {
             return new ResponseEntity<>(seatList, HttpStatus.OK);
         }

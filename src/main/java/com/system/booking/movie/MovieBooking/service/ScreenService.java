@@ -1,5 +1,6 @@
 package com.system.booking.movie.MovieBooking.service;
 
+import com.system.booking.movie.MovieBooking.dto.ScreenDto;
 import com.system.booking.movie.MovieBooking.entity.Screen;
 import com.system.booking.movie.MovieBooking.entity.Seat;
 import com.system.booking.movie.MovieBooking.entity.Theatre;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScreenService {
@@ -22,8 +24,13 @@ public class ScreenService {
     @Autowired
     private SeatRepository seatRepository;
 
-    public List<Screen> getAllScreens() {
-        return screenRepository.findAll();
+    public List<ScreenDto> getAllScreens() {
+        List<Screen> screens = screenRepository.findAll();
+        return screens.stream().map(screen ->
+                new ScreenDto(screen.getScreen_id(),
+                        (screen.getTheatre() != null) ? screen.getTheatre().getTheatre_id() : null,
+                        screen.getTotal_seats()))
+                .collect(Collectors.toUnmodifiableList());
     }
 
     @Transactional

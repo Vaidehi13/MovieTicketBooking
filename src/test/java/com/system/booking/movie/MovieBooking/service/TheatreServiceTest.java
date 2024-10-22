@@ -1,5 +1,6 @@
 package com.system.booking.movie.MovieBooking.service;
 
+import com.system.booking.movie.MovieBooking.dto.TheatreDto;
 import com.system.booking.movie.MovieBooking.entity.Theatre;
 import com.system.booking.movie.MovieBooking.exception.ResourceNotFoundException;
 import com.system.booking.movie.MovieBooking.repository.TheatreRepository;
@@ -42,7 +43,7 @@ public class TheatreServiceTest {
         List<Theatre> theatres = Arrays.asList(theatre);
         when(theatreRepository.findAll()).thenReturn(theatres);
 
-        List<Theatre> result = theatreService.getAllTheatres();
+        List<TheatreDto> result = theatreService.getAllTheatres();
         assertEquals(1, result.size());
         assertEquals("Grand High Street", result.get(0).getTheatre_name());
         verify(theatreRepository, times(1)).findAll();

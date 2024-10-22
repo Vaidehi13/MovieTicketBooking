@@ -1,5 +1,6 @@
 package com.system.booking.movie.MovieBooking.service;
 
+import com.system.booking.movie.MovieBooking.dto.TheatreDto;
 import com.system.booking.movie.MovieBooking.entity.Theatre;
 import com.system.booking.movie.MovieBooking.exception.ResourceNotFoundException;
 import com.system.booking.movie.MovieBooking.repository.TheatreRepository;
@@ -7,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TheatreService {
     @Autowired
     TheatreRepository theatreRepository;
-    public List<Theatre> getAllTheatres() {
-        return theatreRepository.findAll();
+    public List<TheatreDto> getAllTheatres() {
+        List<Theatre> theatres = theatreRepository.findAll();
+        return theatres.stream().map(theatre -> new TheatreDto(theatre.getTheatre_name(),theatre.getTheatre_city())).collect(Collectors.toUnmodifiableList());
     }
 
     public void addNewTheatre(Theatre theatre) {
