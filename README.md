@@ -9,6 +9,9 @@ The application aims to streamline the movie-going experience by offering a seam
 ## User Authentication
 User authentication is implemented using Spring Security with BCrypt for password encoding
 
+## User Authentication using JWT
+User authentication is implemented using JWT on the branch jwt.
+
 ## User Authorization
 User authorization is implemented using Role Based Access
 
@@ -29,6 +32,7 @@ The application health metrics are monitored with the help of actuator
 + Spring Data JPA
 + Spring boot Security
 + RestTemplate
++ JWT
 + Redis
 + MySQL
 + JUnit 5
