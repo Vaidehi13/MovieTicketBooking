@@ -7,7 +7,10 @@ The application aims to streamline the movie-going experience by offering a seam
 # Key Features
 
 ## User Authentication
-User authentication is implemented using Spring Security with BCrypt for password encoding
+User authentication is implemented using Spring Security with BCrypt for password encoding.
+
+## User Authentication using JWT
+User authentication is implemented using JWT on the branch jwt.
 
 ## OAuth2 Authentication
 Also enabled Google and Github sign-in on oauth2 branch
